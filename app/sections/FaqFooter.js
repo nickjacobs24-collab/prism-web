@@ -63,6 +63,13 @@ export default function FaqFooter() {
       <footer className="border-t border-white/10 py-10">
         <div className={`${GRID} text-sm text-white/70`}>
           <FooterLinks />
+          {/* Legal disclosure — quiet small print. Middle-dot separators
+              have surrounding spaces so the line wraps naturally between
+              clauses on narrow viewports. */}
+          <p className="mt-6 text-xs text-white/40">
+            © 2026 Prism Digital Ventures Limited · Registered in England and
+            Wales · Company No. 17249642
+          </p>
         </div>
       </footer>
     </section>
