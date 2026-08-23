@@ -141,14 +141,16 @@ Asset usage (structural revision: only ONE screen enters the build):
 
 Each panel follows the §2 grammar: its own colour band, one message, self-contained. **No pinning, no scroll-driven swapping.** Story through sequence.
 
-### Panel 1 — HERO (DARK)
+### Panel 1 — HERO (SHIPPED — reconciled against [app/sections/Hero.js](app/sections/Hero.js), 2026-08-23)
 
-- Full viewport, centred (the ONLY centred panel). **Bottles removed permanently.** Oura anatomy: dimmed background video behind **ONE tight centred stack — headline → small gap → button directly beneath — vertically centred as a unit** (not two separated zones; earlier "button low" is superseded — it read as floating over the bare gradient). Video (`HeroVideo.js`) fills the frame behind the text via `absolute inset-0 z-0`; the composition depends on it. Muted, looping, autoplay, heavily dimmed; **poster fallback is the black→green gradient alone** — mobile, reduced-motion, and until footage is supplied (`HERO_VIDEO_SRC`). Founder supplies footage.
-- Minimal nav: **logo left; "Join waitlist" right.** No other nav items. (Mobile per §8: logo + one CTA, no hamburger — same composition.)
-- **Gradient (Fix 1):** black at top, deep green through roughly the lower half, matching App Store screen 1. Not a sliver at the foot.
-- Headline: **KNOW IF YOUR SUPPLEMENTS ACTUALLY WORK** (green: WORK)
-- CTA: **Join the waitlist** (white pill)
-- No supporting line. Deliberate. Do not add one.
+**This entry records what is LIVE.** It supersedes the pre-launch hero spec — centred stack, dimmed background video, all-caps green-accent headline, nav CTA, "no supporting line" — every part of which the shipped site moved past. Do not restore any of it from older sections of this document.
+
+- **Background: the PRISM ARTWORK on flat black** (`bg-black`) — not the black→green gradient, not video. **Desktop:** `/hero/prism-hero.png` as a right-weighted full-bleed CSS background (`34vw`, positioned `85.4% center` — sized in `vw` so the geometry is independent of viewport height); the left half is feathered to clean black so copy never sits over lit pixels. **Mobile:** `/hero/prism-mobile.png`, uncropped and centred ABOVE the copy, height-capped (`29vh`, max `290px`) so the hero fits one viewport.
+- **Alignment: copy is LEFT-aligned on desktop, centred on mobile.** This supersedes the §2.2 "Centred: P1 ONLY" rule at desktop width.
+- Nav: **the PRISM wordmark ONLY.** No "Join waitlist" item, no other items, no hamburger.
+- Headline — **sentence case, white, weight 700, NO green accent word**: **See if your supplements are working.** Desktop forces the line break after "supplements"; mobile wraps naturally.
+- **Supporting line — it EXISTS.** The old "No supporting line. Deliberate. Do not add one." rule is dead: **Prism shows how supplements affect your health, so you can keep what works and change what doesn't.**
+- CTA: one white button — **`rounded-xl`, not the §3.1 white pill** — reading **Join the waitlist**. **It collects no email.** It jumps to `#get-prism` and focuses that field (`focus({preventScroll:true})` first, inside the tap, then smooth scroll).
 
 ### Panel 2 — BRIDGE (LIGHT, **stacked** — Whoop horizontal pattern, global-refinement round)
 
@@ -239,9 +241,9 @@ Quiz and question flows. Goal selectors. Supplement lists and supplement pages. 
 
 ## 7. Confirmed infrastructure (verified from live setup — do not re-derive)
 
-- Stack: Next.js (App Router), Tailwind CSS, Prisma, deployed on Vercel.
-- Repo: `nickjacobs24-collab/Renew-App` on GitHub. This is the only repo in scope. `renew-backend` and `renew-ios` belong to the app dev agency and are never touched.
-- Vercel project: `renew-app`, currently serving www.renewhealth.app, deploying from `main`. Branch previews available by default.
+- Stack: Next.js (App Router), Tailwind CSS, deployed on Vercel. **Prisma is NOT in the stack** — it went with the delete pass (see the Prisma bullet below); the old stack line listing it contradicted that.
+- Repo: `nickjacobs24-collab/prism-web` on GitHub. This is the only repo in scope. `renew-backend` and `renew-ios` belong to the app dev agency and are never touched.
+- Vercel project: `renew-app`, serving **prismhealthco.com**, deploying from `main`. **Every push to `main` is a production deploy** (§8.2). Branch previews still exist by default, but no staging branch is in use.
 - Vercel holds 13 environment variables and a MailerSend integration. **Never delete, rewrite or commit `.env` / `.env.local`.**
 - **Waitlist storage: Airtable (founder decision, supersedes the original brief).** The brief assumed MailerSend was the waitlist path; the code showed otherwise — MailerSend was only ever wired to NextAuth sign-in emails. Beat 8 posts to the existing Airtable table. `AIRTABLE_TOKEN` is the only backend credential the new site needs.
 - **MailerSend is cut, not kept** — it dies with the NextAuth route. The Vercel MailerSend integration and its env vars can be retired once the delete pass is merged. Flag before touching anything in the Vercel dashboard; that is founder-side, not a repo change.
@@ -260,7 +262,7 @@ Quiz and question flows. Goal selectors. Supplement lists and supplement pages. 
 8. Motion: panels are static compositions; motion is limited to restrained entrance treatment (fade/rise on scroll-into-view) and ambient touches like the bottle drift. No pinning, no scroll-linked morphing (§2). `prefers-reduced-motion`: everything renders static. (The original pinned-sequence motion proof was built, then killed by the structural revision — do not resurrect it.)
 9. Performance budget: LCP under 2.5s on mid-range mobile, 60fps scroll, CLS near zero. Jank kills belief on an evidence product.
 10. **Waitlist writes: preview deployments must never write to the live Airtable table.** Gate on `VERCEL_ENV === 'production'`, not `NODE_ENV` — implemented in `app/api/waitlist/route.js`. Verify on the preview URL before the founder tests Panel 6.
-11. Analytics: **[TBC — founder to confirm. Recommended: Vercel Analytics for visits and waitlist conversion.]**
+11. Analytics: **SHIPPED — Vercel Analytics.** `@vercel/analytics` is a dependency and `<Analytics />` renders in [app/layout.js](app/layout.js). Nothing else is loaded; the old GA and Microsoft Clarity tags went with the delete pass and were not reinstated.
 12. OG/share metadata carries the hero line and the OG image from the asset manifest.
 13. Cutover: merge to `main`, point prismhealthco.com (DNS in Cloudflare) at the deployment. Rename the GitHub repo to a Prism name at cutover, not before.
 14. Old domain (renewhealth.app): killed. No redirect. Site comes down; domain lapses.
@@ -281,7 +283,7 @@ Commands: `npm run dev`, `npm run build` (plain `next build` — the `prisma gen
 
 What exists now:
 
-- [app/layout.js](app/layout.js) — Prism shell: fonts via `next/font/google` (self-hosted at build, no runtime third-party requests), title, hero-line description. No analytics yet (§8.11 TBC).
+- [app/layout.js](app/layout.js) — Prism shell: fonts via `next/font/google` (self-hosted at build, no runtime third-party requests), title, hero-line description. **Vercel Analytics** via `<Analytics />` (§8.11).
 - [app/page.js](app/page.js) — composes all seven panels from [app/sections/](app/sections/): `Hero`, `Bridge`, `HeresHow`, `Proof`, `Trust`, `GetPrism`, `FaqFooter`, plus `system.js` (grid/eyebrow/container primitives and the `IS_LAUNCHED` flag).
 - [app/globals.css](app/globals.css) — Tailwind import, §3.1 tokens, font wiring, bottle-drift keyframes (with `prefers-reduced-motion` disable). Band gradients live per-panel in the section components, not on `body`.
 - [public/screens/progress.png](public/screens/progress.png) — the one in-build app screen (Panel 4, not yet built).
@@ -300,7 +302,7 @@ What exists now:
    - No background video; `HeroVideo.js` is no longer the hero's mechanism.
    - **Still open:** the OG/share image remains undefined.
 2. ~~Display face TBC~~ — **RESOLVED AND SHIPPED. Do not reopen.** Typography is **Inter** as the single sans (hierarchy by weight only) with **Newsreader italic** as a sparing serif accent. See §3.1. This no longer blocks anything.
-3. **Analytics is still TBC (§8.11).** The old GA and hardcoded Microsoft Clarity tags went with the delete pass; nothing replaces them yet.
+3. ~~Analytics TBC~~ — **RESOLVED AND SHIPPED. Vercel Analytics is live** (`@vercel/analytics`, `<Analytics />` in [app/layout.js](app/layout.js)). The old GA and Microsoft Clarity tags went with the delete pass and were not reinstated.
 4. **Integration list is unconfirmed (§4 Beat 3).** **APPLE WATCH | WHOOP | OURA | GARMIN** is a factual claim and needs confirming before ship.
 5. **FAQ copy is founder-supplied (§4 Beat 9).** Placeholders only, plus the two product-truth checks (wearable required or not; day-14 answer).
 6. **Vercel-side cleanup after merge (founder-side, not repo work):** retire the MailerSend integration and its env vars, `DATABASE_URL`, `NEXTAUTH_*`, `GOOGLE_CLIENT_*`. Only `AIRTABLE_TOKEN` (and any analytics var) remains needed. Flag, don't touch — the dashboard is the founder's.
