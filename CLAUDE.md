@@ -2,7 +2,9 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-**STATUS: P4 rebuilt to match robin hood 2 precisely — wide dark card, narrow centred straight phone bleeding off the bottom, generous dark margins, neutral (not green) card glow, green from the screen. Hero headline brought down to a calmer scale (3 lines) with more breathing room. Full page on `rebuild`. Outstanding before ship: all visuals, OG image, FAQ answers, Privacy/Terms, disclaimer, integration list, launch swap. Do not re-run completed phases.**
+**STATUS: LIVE, POST-LAUNCH, ITERATING ON `main`.** The rebuild is complete and merged. **`main` is production and the single working branch — every push to `main` deploys.** The site is live at prismhealthco.com. The `rebuild` branch is retired and deleted. Outstanding: OG image, FAQ answers, Privacy/Terms, disclaimer, integration list. Do not re-run completed phases.
+
+**Reading this file post-launch:** it was written as a pre-launch build spec, and parts of it still describe intentions the shipped site moved past. **Where this document and the code disagree, the code is correct** — the live site is the source of truth for what Prism is now. Sections reconciled against the code carry a SHIPPED marker; the rest may lag.
 
 This file is the single source of truth. `PRISM_WEBSITE_BRIEF.md` has been merged into it and deleted (recoverable from `main` at commit `72cde1e`).
 
@@ -102,7 +104,9 @@ In code: the grid and shared primitives live in [app/sections/system.js](app/sec
 - Accent green (WORK / NOT / EVIDENCE only): `#3AB203` — an accent in BOTH modes, never a background.
 - Display type colour: `#FFFFFF` on dark panels, the ink colour on light panels; all caps for headlines in both modes.
 - **Trap** — in-app greens (`#5FDC02`, `#A8F161`, `#7AC95D`) belong to app screens only. They arrive on the site inside screenshots. Never use them for website type, buttons, or accents.
-- Display face: **Archivo** (multi-weight grotesque) via `next/font`, set to **medium (500)** globally — large-and-lighter premium feel per the Oura/Levels heroes, not heavy/black (global-refinement round; replaced Archivo Black, which had no lighter weight). One global weight, every headline. Founder swaps the exact family later.
+- **Type (SHIPPED — reconciled against [app/layout.js](app/layout.js), 2026-08-23; supersedes every Archivo call in this document):** **ONE sans family — Inter** — via `next/font/google`, used for everything: headlines, body, eyebrows, buttons, nav, footer. **Hierarchy is carried by WEIGHT ONLY** — headlines 600–700 (the hero H1 is 700, set inline because `.font-display`'s weight overrides the `font-bold` utility), body 400, eyebrow labels 500. Weights 300–800 are loaded so the headline weights are real, not synthesised.
+- **Serif accent (SHIPPED):** **Newsreader**, italic, used **sparingly as an accent** alongside Inter — matching the serif in the app screens ("Sleep", "Improving"), in the Oura/Levels editorial register. Closest-match per §3.1a. It is a separate mechanism from the green accent-word treatment; do not conflate them.
+- Both faces are self-hosted by `next/font` at build — no runtime third-party requests. **Archivo and Archivo Black are dead. Do not reintroduce them.**
 - Body type and CTA button styling: closest-match from reference images; flag choices.
 - One green accent word per headline, only where meaning lives: WORK, NOT, EVIDENCE.
 - CTA: white pill button.
@@ -247,7 +251,7 @@ Quiz and question flows. Goal selectors. Supplement lists and supplement pages. 
 ## 8. Build plan
 
 1. ~~Baseline commit + push~~ **done** (`main` `72cde1e`).
-2. ~~`rebuild` branch~~ **done.** All work happens on the branch; `main` and the live deployment stay untouched.
+2. ~~`rebuild` branch~~ **done, merged, and RETIRED (2026-08-23).** The branch-only rule is dead — do not reinstate it. **`main` is the single working branch and it is production: every push to `main` deploys to prismhealthco.com.** There is no staging branch and no preview gate between a commit and the live site. Work on `main`, and treat every push as a deploy.
 3. ~~Delete pass~~ **done** (verified building clean).
 4. **Panel gating: Panels 1–3 built fully dressed — matched display type (closest match to the App Store face, flagged), real composition, band treatment, spacing, polish. Pushed to `rebuild` for preview. STOP. The founder judges on the preview before Panels 4–7 build.**
 5. Iterate on the branch preview URL. The founder judges copy and visuals there.
@@ -288,13 +292,19 @@ What exists now:
 
 ## 11. Open flags (raised per §9, not resolved in code)
 
-1. **Hero footage TBD (amended round):** the hero video slot is built and dormant (`HERO_VIDEO_SRC` in `HeroVideo.js`); gradient-only until the founder supplies footage. The OG/share image needs redefinition too (was the bottle composition).
-2. **Display face is still TBC (§3.1).** Blocks final typography on every beat. Build with a flagged fallback; do not substitute a lookalike.
+1. ~~Hero footage TBD~~ — **SUPERSEDED. The hero ships built around the PRISM ARTWORK, not video.** Reconciled against [app/sections/Hero.js](app/sections/Hero.js), 2026-08-23:
+   - **Desktop:** `/hero/prism-hero.png` as a right-weighted full-bleed CSS background (`34vw`, positioned `85.4% center` — sized in `vw` so the geometry is independent of viewport height), copy overlaid on a feathered black left half.
+   - **Mobile:** its own treatment — `/hero/prism-mobile.png` uncropped and centred ABOVE the copy, height-capped so the hero fits one viewport. Never sets copy over the prism or its light path.
+   - **The hero collects NO email.** A single "Join the waitlist" button jumps to `#get-prism` and focuses that field (`focus({preventScroll:true})` first, inside the tap, then smooth scroll). The inline hero email form was removed — do not reinstate it.
+   - **Nav is the PRISM wordmark ONLY.** No "Join waitlist" nav item.
+   - No background video; `HeroVideo.js` is no longer the hero's mechanism.
+   - **Still open:** the OG/share image remains undefined.
+2. ~~Display face TBC~~ — **RESOLVED AND SHIPPED. Do not reopen.** Typography is **Inter** as the single sans (hierarchy by weight only) with **Newsreader italic** as a sparing serif accent. See §3.1. This no longer blocks anything.
 3. **Analytics is still TBC (§8.11).** The old GA and hardcoded Microsoft Clarity tags went with the delete pass; nothing replaces them yet.
 4. **Integration list is unconfirmed (§4 Beat 3).** **APPLE WATCH | WHOOP | OURA | GARMIN** is a factual claim and needs confirming before ship.
 5. **FAQ copy is founder-supplied (§4 Beat 9).** Placeholders only, plus the two product-truth checks (wearable required or not; day-14 answer).
 6. **Vercel-side cleanup after merge (founder-side, not repo work):** retire the MailerSend integration and its env vars, `DATABASE_URL`, `NEXTAUTH_*`, `GOOGLE_CLIENT_*`. Only `AIRTABLE_TOKEN` (and any analytics var) remains needed. Flag, don't touch — the dashboard is the founder's.
-7. **Closest-match design choices in Panels 1–3 (per §3.1a — judge on the preview, flagged not asked):** display face **Archivo Black** via `next/font/google` (nearest available heavy/tight all-caps grotesque; body face **Inter**); "PRISM" text wordmark in the nav (no logo asset supplied); band gradients — hero near-black deepening to green at its base, bridge continuing one step deeper and returning to black, Panel 3 stepping back into green; bottle placeholder proportions and slow-drift timing; stanza pacing (~70vh per stanza) and type scale throughout. **System tokens (§2.2):** grid `max-w-6xl` with `px-6 md:px-10` margins, panel rhythm `py-28 md:py-36`, container radius `1.25rem`; the wearable strip rendered as a pill-shaped designed element (`rounded-full` + faint ring) — pill radius for small designed elements, the radius token for contained visuals.
+7. **Closest-match design choices in Panels 1–3 (per §3.1a — judge on the preview, flagged not asked):** ~~display face Archivo Black~~ **(superseded — typography shipped as Inter + Newsreader italic accent; see §3.1)**; "PRISM" text wordmark in the nav (no logo asset supplied); band gradients — hero near-black deepening to green at its base, bridge continuing one step deeper and returning to black, Panel 3 stepping back into green; bottle placeholder proportions and slow-drift timing; stanza pacing (~70vh per stanza) and type scale throughout. **System tokens (§2.2):** grid `max-w-6xl` with `px-6 md:px-10` margins, panel rhythm `py-28 md:py-36`, container radius `1.25rem`; the wearable strip rendered as a pill-shaped designed element (`rounded-full` + faint ring) — pill radius for small designed elements, the radius token for contained visuals.
 8. **Eyebrow treatment (closest-match, judge on preview):** 11px small caps, `0.3em` tracking, muted to 60% of the mode's type colour (white/60 dark, ink/60 light) — quiet-label convention; deliberately NOT the accent green, to keep WORK/NOT/EVIDENCE special. One primitive in `system.js`, same treatment both modes per spec.
 9. **Panel 6 header repeat** ("No more guessing") — locked, built as-is when Panel 6 comes; founder resolves on preview (§5 collision check 1).
 10. **Two-mode closest-match calls (judge on preview):** cream `#F7F2E8` / ink `#14140F` (§3.1 — exact warmth is the founder's call); panel transitions built as **hard band edges** (short fade is the fallback if harsh); dark-mode supporting copy at `white/90`+, light-mode at ink `/80`+ per the contrast rule; bridge pacing compressed to ~1.5 viewports total (~50vh per stanza beat).
