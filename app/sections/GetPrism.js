@@ -10,7 +10,8 @@ import { GRID, PANEL_PAD, Eyebrow, IS_LAUNCHED, GAP_STACK } from "./system";
  * The only input on the entire site. POSTs to /api/waitlist (Airtable,
  * §8.10 preview-gated). Form-state microcopy is drafted, flagged in
  * CLAUDE.md §11. At launch IS_LAUNCHED swaps this block (§4).
- * Left-aligned (P5-round rule: the hero is the only centred panel).
+ * CENTRED at all widths (robin hood 3, §2.3). The older "left-aligned,
+ * the hero is the only centred panel" rule was superseded by the build.
  */
 
 const INK = "var(--prism-ink)";
@@ -18,7 +19,7 @@ const INK = "var(--prism-ink)";
 export default function GetPrism() {
   const prefersReduced = useReducedMotion();
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState("idle"); // idle | submitting | success | error
+  const [status, setStatus] = useState("idle"); // idle | submitting | success | error | rateLimited
 
   async function onSubmit(e) {
     e.preventDefault();
@@ -30,7 +31,11 @@ export default function GetPrism() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
-      setStatus(res.ok ? "success" : "error");
+      // A 429 is the rate limit, not a fault. Tell the visitor to wait
+      // rather than showing the generic failure line.
+      if (res.ok) setStatus("success");
+      else if (res.status === 429) setStatus("rateLimited");
+      else setStatus("error");
     } catch {
       setStatus("error");
     }
@@ -122,6 +127,15 @@ export default function GetPrism() {
               We&rsquo;ll email you once when Prism launches.
             </p>
           </motion.div>
+        )}
+
+        {/* Rate limited (429). Framed as the situation, not the reader's
+            fault, per the §5 copy rules. The form stays on screen so the
+            visitor can retry. */}
+        {status === "rateLimited" && (
+          <p className="text-sm" style={{ color: INK }}>
+            Too many attempts just now. Please try again in a minute.
+          </p>
         )}
 
         {status === "error" && (
