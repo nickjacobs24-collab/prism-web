@@ -5,12 +5,10 @@ import { Eyebrow } from "./system";
 /*
  * Panel 5 — TRUST / OUR PROMISE (§4, DARK). Rebuilt to the "Section 5 Trust"
  * reference: wide panoramic dark green→black panel (green glow top-left).
- * Left: eyebrow → large sans headline (two lines, only "evidence" in Prism
- * green) → two-line supporting copy. Right: the italic-serif quote,
- * centre-aligned, lower-right. No strap, no footer row, no imagery.
+ * Left: eyebrow → large sans headline (two lines, all white) → two-line
+ * supporting copy. Right: the italic-serif quote, centre-aligned,
+ * lower-right. No strap, no footer row, no imagery.
  */
-
-const ACCENT = "var(--prism-accent)";
 
 export default function Trust() {
   const prefersReduced = useReducedMotion();
@@ -53,7 +51,7 @@ export default function Trust() {
               We don&rsquo;t sell supplements.
             </span>
             <br />
-            We show the <span style={{ color: ACCENT }}>evidence</span>.
+            We show the evidence.
           </motion.h2>
 
           <motion.div

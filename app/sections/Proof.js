@@ -8,11 +8,9 @@ import { GRID, PANEL_PAD, Eyebrow, HEADLINE_STEPPED } from "./system";
  * BLACK (flat #000000), unique on the page — P1/P3/P5 use the gradient
  * fade, P4 is stark flat black so the phone pops (robin hood 2). Centred
  * layout: text above, then the sleep chart in a soft-glow DARK card,
- * centred, STRAIGHT (not angled), with sparing green highlights. Jet
- * black + a little green + the phone is the whole look.
+ * centred, STRAIGHT (not angled). Green lives in the screen content
+ * only. Jet black + a little green + the phone is the whole look.
  */
-
-const ACCENT = "var(--prism-accent)";
 
 export default function Proof() {
   const prefersReduced = useReducedMotion();
@@ -39,7 +37,7 @@ export default function Proof() {
           {...enter(0.06)}
           className={`font-display leading-[1.05] text-white ${HEADLINE_STEPPED}`}
         >
-          <span style={{ color: ACCENT }}>See</span> what&rsquo;s working
+          See what&rsquo;s working
           <br />
           and what&rsquo;s not.
         </motion.h2>

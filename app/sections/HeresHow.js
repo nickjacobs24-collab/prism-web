@@ -71,11 +71,11 @@ export default function HeresHow() {
             <span className="block text-white/70">Based on your health data.</span>
           </motion.h2>
 
-          {/* Compatibility line — same wordmark styling as the Apple Watch
-              brand mark (the only supported device at launch). */}
+          {/* Compatibility line — same quiet wordmark styling; Apple Health
+              is the data source at launch. */}
           <motion.div {...enter(0.22)} className="mt-4 md:mt-6">
             <span className="text-[11px] font-medium uppercase tracking-[0.1em] text-white/75 md:text-sm">
-              Works with Apple Watch
+              Works with Apple Health
             </span>
           </motion.div>
         </div>
