@@ -13,7 +13,12 @@ import Link from "next/link";
 const PAPER = "#fefdfb";
 const INK = "#1a1a18";
 
-export default function LegalPage({ title, updated, children }) {
+export default function LegalPage({
+  title,
+  updated,
+  updatedLabel = "Last updated",
+  children,
+}) {
   return (
     <main
       className="min-h-screen"
@@ -36,7 +41,7 @@ export default function LegalPage({ title, updated, children }) {
 
         {updated && (
           <p className="mt-2 text-sm" style={{ color: "rgba(26,26,24,0.6)" }}>
-            Last updated: {updated}
+            {updatedLabel}: {updated}
           </p>
         )}
 

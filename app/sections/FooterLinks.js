@@ -42,6 +42,11 @@ export default function FooterLinks() {
       </a>
       <span aria-hidden="true" className="h-3 w-px bg-white/20" />
 
+      <a href="/consumer-health-privacy" className="hover:text-white">
+        Consumer Health Privacy
+      </a>
+      <span aria-hidden="true" className="h-3 w-px bg-white/20" />
+
       <div ref={wrapRef} className="relative">
         <button
           ref={triggerRef}
