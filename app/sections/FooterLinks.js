@@ -2,7 +2,8 @@
 import { useEffect, useRef, useState } from "react";
 
 /*
- * Footer links. Privacy is a real page (/privacy). Contact opens a small
+ * Footer links. Privacy, Consumer Health Privacy and Terms are real pages
+ * (/privacy, /consumer-health-privacy, /terms). Contact opens a small
  * contact card anchored above the footer (a popover on desktop, a restrained
  * bottom sheet on mobile). The email is a plain, standard mailto anchor —
  * clicking it opens the visitor's mail composer. No clipboard behaviour.
@@ -44,6 +45,11 @@ export default function FooterLinks() {
 
       <a href="/consumer-health-privacy" className="hover:text-white">
         Consumer Health Privacy
+      </a>
+      <span aria-hidden="true" className="h-3 w-px bg-white/20" />
+
+      <a href="/terms" className="hover:text-white">
+        Terms
       </a>
       <span aria-hidden="true" className="h-3 w-px bg-white/20" />
 
