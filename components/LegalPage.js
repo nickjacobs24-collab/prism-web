@@ -52,7 +52,7 @@ export default function LegalPage({
          * so page files stay clean semantic markup. Reused by every legal
          * page.
          */}
-        <div className="mt-8 text-[1.0625rem] leading-[1.7] [&>p]:mt-4 [&>h2]:mt-10 [&>h2]:mb-1 [&>h2]:text-lg [&>h2]:font-semibold [&>h2]:tracking-tight [&_a]:underline [&_a]:underline-offset-2">
+        <div className="mt-8 text-[1.0625rem] leading-[1.7] [&>p]:mt-4 [&>h2]:mt-10 [&>h2]:mb-1 [&>h2]:text-lg [&>h2]:font-semibold [&>h2]:tracking-tight [&>h3]:mt-6 [&>h3]:mb-1 [&>h3]:text-[1.0625rem] [&>h3]:font-semibold [&>ul]:mt-4 [&>ul]:list-disc [&>ul]:pl-5 [&_li]:mt-1 [&_a]:underline [&_a]:underline-offset-2">
           {children}
         </div>
       </div>

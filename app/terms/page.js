@@ -8,17 +8,16 @@ export const metadata = {
 
 export default function Terms() {
   return (
-    <LegalPage title="Terms of Service" updated="[publication date — confirm before launch]">
+    <LegalPage title="Prism Terms of Service" updated="11 November 2026">
       <h2>1. About these terms</h2>
       <p>
         These terms govern your use of the Prism app and prismhealthco.com
-        (together, &ldquo;Prism&rdquo;). Prism is operated by Prism Digital
-        Ventures Limited (&ldquo;we&rdquo;, &ldquo;us&rdquo; or
-        &ldquo;our&rdquo;).
+        (together, &quot;Prism&quot;). Prism is operated by Prism Digital
+        Ventures Limited (&quot;we&quot;, &quot;us&quot; or &quot;our&quot;).
       </p>
       <p>
         We are registered in England and Wales, company number 17249642.
-        Registered office: 32 Lattimore Road, St Albans, AL1 3XW, United
+        Correspondence address: 32 Lattimore Road, St Albans, AL1 3XW, United
         Kingdom. Email:{" "}
         <a href="mailto:hello@prismhealthco.com">hello@prismhealthco.com</a>.
       </p>
@@ -32,8 +31,8 @@ export default function Terms() {
       <h2>2. Who can use Prism</h2>
       <p>
         You must be at least 16 to use Prism. Where local law requires a
-        parent or legal guardian&rsquo;s consent to your use of Prism or entry
-        into this agreement, you must have that consent. Subscription
+        parent or legal guardian&rsquo;s consent to your use of Prism or
+        entry into this agreement, you must have that consent. Subscription
         purchases must also meet applicable Apple account, age and
         parental-consent requirements.
       </p>
@@ -189,9 +188,10 @@ export default function Terms() {
 
       <h2>7. Your privacy and information</h2>
       <p>
-        Our <a href="/privacy">Privacy Policy</a> explains what personal
+        Our <a href="/privacy">Privacy Notice</a> explains what personal
         information we collect, why we use it, how long we retain it and how
-        you can exercise your rights.
+        you can exercise your rights. It is available through the Privacy
+        link on prismhealthco.com and within the app.
       </p>
       <p>
         Accepting these terms does not, by itself, give consent to optional
@@ -236,7 +236,7 @@ export default function Terms() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          apple.com/legal/internet-services/itunes
+          https://www.apple.com/legal/internet-services/itunes/
         </a>
         . We are the application provider and licensor of Prism under that
         agreement. These terms supplement the licence with Prism-specific

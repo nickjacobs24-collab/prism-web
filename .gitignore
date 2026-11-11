@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# local legal source documents (not for commit)
+legal-source/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
