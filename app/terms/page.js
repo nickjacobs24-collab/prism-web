@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function Terms() {
   return (
-    <LegalPage title="Prism Terms of Service" updated="11 November 2026">
+    <LegalPage title="Prism Terms of Service" updated="19 November 2026">
       <h2>1. About these terms</h2>
       <p>
         These terms govern your use of the Prism app and prismhealthco.com
@@ -224,6 +224,15 @@ export default function Terms() {
         not transfer ownership. Do not resell, redistribute or copy the
         service, or reverse engineer it, except where permitted by
         applicable law.
+      </p>
+      <p>
+        Do not access or use Prism, or let anyone else use your account, to
+        develop, test, benchmark, train or improve a competing product or
+        service. Do not copy, record, reproduce, adapt, distribute or
+        extract Prism&rsquo;s screens, charts, recommendations or other
+        content for commercial or competitive purposes, whether manually or
+        by automated means. This does not limit any right that cannot
+        lawfully be excluded.
       </p>
       <p>
         The licence for the iOS app, including content and services accessed
